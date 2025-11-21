@@ -49,14 +49,6 @@ const BAGUA_MAP: Record<number, { name: string; element: string; nature: string;
   8: { name: '坤', element: '土', nature: '地', meaning: '柔顺、包容' },
 };
 
-const ELEMENT_ATTRS: Record<string, string> = {
-  '金': '坚硬、肃杀、变革',
-  '木': '生长、仁慈、直爽',
-  '水': '流动、智慧、润下',
-  '火': '炎上、礼仪、急进',
-  '土': '厚重、诚信、承载',
-};
-
 const OBJECT_TRIGRAM_KEYWORDS: Array<{ keywords: string[]; trigram: number; element: string }> = [
   { keywords: ['天', '父', '龙', '圆', '金属', '阳光'], trigram: 1, element: '金' }, // Qian
   { keywords: ['泽', '悦', '口', '笑', '少女', '银'], trigram: 2, element: '金' },    // Dui
@@ -261,3 +253,4 @@ export const MANTRAS = {
 };
 
 export const DISCLAIMER = "占卜结果仅供参考，命运掌控在自己手中。";
+
