@@ -7,6 +7,7 @@ import { Compass } from 'lucide-react';
 type AppState = {
   result: {
     result?: PredictionResult;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lunarInfo: any;
     mantra?: string;
     isQuickCheck: boolean;
@@ -18,7 +19,12 @@ function App() {
   const [state, setState] = useState<AppState>({ result: null });
   const [history, setHistory] = useState<Set<string>>(new Set());
 
-  const handleDivination = (data: { date: Date; objectName: string; question: string; type: string }) => {
+  const handleDivination = (data: { 
+    date: Date; 
+    objectName: string; 
+    question: string; 
+    type: 'general' | 'health' | 'mental' | 'career' | 'love' 
+  }) => {
     const questionKey = `${data.question.trim().toLowerCase()}`;
 
     if (history.has(questionKey)) {
@@ -29,7 +35,7 @@ function App() {
     const calculation = calculateDivination({
       date: data.date,
       objectName: data.objectName,
-      questionType: data.type as any,
+      questionType: data.type,
     });
 
     // Determine Mantra
@@ -114,7 +120,7 @@ function App() {
       </main>
 
       <footer className="mt-16 text-center text-stone-400 text-sm font-serif relative z-10 pb-4">
-        <p>&copy; {new Date().getFullYear()} 在线梅花易数 · 小六壬</p>
+        <p>&copy; {new Date().getFullYear()} 在线梅花易数</p>
       </footer>
     </div>
   );

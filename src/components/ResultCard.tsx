@@ -1,5 +1,6 @@
 import { type PredictionResult } from '../lib/divination';
 import clsx from 'clsx';
+import { ScrollText, Compass, BookOpen, ArrowRight } from 'lucide-react';
 
 interface ResultCardProps {
   data: {
@@ -21,104 +22,165 @@ interface ResultCardProps {
 export function ResultCard({ data }: ResultCardProps) {
   const { result, lunarInfo, mantra, isQuickCheck } = data;
   
-  // Check for Po/Wei days
   const isDangerousDay = lunarInfo.zhiXing === '破' || lunarInfo.zhiXing === '危';
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+    <div className="w-full max-w-4xl mx-auto mt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
       <div className="bg-paper-yellow text-ink-black p-8 rounded-sm shadow-2xl ink-brush-border relative overflow-hidden">
-        {/* Background pattern or watermark could go here */}
         <div className="absolute top-0 left-0 w-full h-2 bg-chinese-red/80"></div>
         <div className="absolute bottom-0 right-0 w-full h-2 bg-chinese-red/80"></div>
 
-        {/* Header */}
         <div className="text-center mb-8 border-b-2 border-stone-300 pb-4">
-          <h2 className="text-3xl font-bold font-serif text-chinese-red mb-2">
-            {isQuickCheck ? '今日黄历' : '占卜结果'}
+          <h2 className="text-3xl font-bold font-serif text-chinese-red mb-2 flex items-center justify-center gap-2">
+            {isQuickCheck ? <Compass className="w-6 h-6" /> : <BookOpen className="w-6 h-6" />}
+            {isQuickCheck ? '今日黄历' : '梅花易数'}
           </h2>
           <p className="text-stone-600 font-serif">{lunarInfo.lunarStr}</p>
         </div>
 
-        {/* Divination Content */}
         {!isQuickCheck && result && (
-          <div className="mb-8 space-y-6">
-            <div className="text-center">
-              <h3 className="text-4xl font-bold mb-4 text-chinese-red">{result.title}</h3>
-              <div className="bg-white/40 p-6 rounded border border-stone-300 italic text-lg leading-relaxed font-serif">
-                {result.poem.split('，').map((line, i) => (
-                  <p key={i} className="mb-1">{line}，</p>
-                ))}
+          <div className="mb-8 space-y-8">
+            
+            {/* Hexagrams Display Grid */}
+            <div className="grid md:grid-cols-2 gap-8">
+              
+              {/* Main Hexagram */}
+              <div className="text-center bg-white/30 p-6 rounded border border-stone-200 relative">
+                 <span className="absolute top-2 left-2 text-xs font-bold text-white bg-chinese-red px-2 py-1 rounded">本卦</span>
+                 <div className="text-7xl mb-4 text-chinese-red font-serif leading-none mt-4">{result.hexagram.symbol}</div>
+                 <h3 className="text-3xl font-bold text-chinese-red mb-1">{result.hexagram.name}</h3>
+                 <p className="text-sm text-stone-500 mb-3">{result.hexagram.nature}</p>
+                 <div className="border-t border-stone-300/50 pt-3 mt-2">
+                   <p className="text-lg font-bold text-stone-800 mb-2">“ {result.hexagram.judgment} ”</p>
+                   <p className="text-stone-600 italic font-serif text-sm leading-relaxed">{result.hexagram.description}</p>
+                   
+                   {result.analysis?.hexagramAnalysis.shaoYong && (
+                     <div className="mt-4 text-left bg-stone-50/50 p-2 rounded border border-stone-100">
+                       <p className="text-xs font-bold text-stone-500 mb-1">邵雍解：</p>
+                       <p className="text-stone-700 text-sm">{result.analysis.hexagramAnalysis.shaoYong}</p>
+                     </div>
+                   )}
+                   {result.analysis?.hexagramAnalysis.traditional && (
+                     <div className="mt-2 text-left bg-stone-50/50 p-2 rounded border border-stone-100">
+                       <p className="text-xs font-bold text-stone-500 mb-1">传统解卦：</p>
+                       <p className="text-stone-700 text-sm">{result.analysis.hexagramAnalysis.traditional}</p>
+                     </div>
+                   )}
+                 </div>
               </div>
+
+              {/* Changed Hexagram */}
+              <div className="text-center bg-stone-100/50 p-6 rounded border border-stone-200 relative">
+                 <div className="absolute top-1/2 -left-4 hidden md:block z-10">
+                    <div className="bg-white rounded-full p-1 border border-stone-300 text-stone-400 shadow-sm">
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                 </div>
+                 <span className="absolute top-2 left-2 text-xs font-bold text-stone-600 bg-stone-200 px-2 py-1 rounded">变卦</span>
+                 <div className="text-7xl mb-4 text-stone-700 font-serif leading-none mt-4 opacity-80">{result.changedHexagram.symbol}</div>
+                 <h3 className="text-3xl font-bold text-stone-700 mb-1">{result.changedHexagram.name}</h3>
+                 <p className="text-sm text-stone-500 mb-3">{result.changedHexagram.nature}</p>
+                 <div className="border-t border-stone-300/50 pt-3 mt-2">
+                   <p className="text-lg font-bold text-stone-700 mb-2">“ {result.changedHexagram.judgment} ”</p>
+                   <p className="text-stone-600 italic font-serif text-sm leading-relaxed">{result.changedHexagram.description}</p>
+
+                   {result.analysis?.changedHexagram.shaoYong && (
+                     <div className="mt-4 text-left bg-stone-50/50 p-2 rounded border border-stone-200">
+                       <p className="text-xs font-bold text-stone-500 mb-1">邵雍解：</p>
+                       <p className="text-stone-700 text-sm">{result.analysis.changedHexagram.shaoYong}</p>
+                     </div>
+                   )}
+                   {result.analysis?.changedHexagram.traditional && (
+                     <div className="mt-2 text-left bg-stone-50/50 p-2 rounded border border-stone-200">
+                       <p className="text-xs font-bold text-stone-500 mb-1">传统解卦：</p>
+                       <p className="text-stone-700 text-sm">{result.analysis.changedHexagram.traditional}</p>
+                     </div>
+                   )}
+                 </div>
+              </div>
+
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-bold text-lg border-l-4 border-chinese-red pl-2 mb-2">卦辞解析</h4>
-                <p className="text-stone-800 leading-relaxed">{result.description}</p>
+            {/* Detailed Analysis */}
+            {result.analysis && (
+              <div className="space-y-6 font-serif">
+                
+                {/* Section 1: Analysis */}
+                <div className="bg-white/60 p-5 rounded border-l-4 border-chinese-red shadow-sm">
+                  <h4 className="font-bold text-lg mb-3 flex items-center gap-2 text-chinese-red">
+                    <ScrollText className="w-5 h-5" /> 
+                    🌿 起卦分析
+                  </h4>
+                  <div className="space-y-2 text-stone-800 text-sm leading-relaxed">
+                    <p><span className="font-bold text-stone-600">时间流转：</span>{result.analysis.timeAnalysis}</p>
+                    <p><span className="font-bold text-stone-600">物象寓意：</span>{result.analysis.objectAnalysis}</p>
+                  </div>
+                </div>
+
+                {/* Section 2: Detailed Meaning */}
+                <div className="bg-stone-100/80 p-5 rounded border border-stone-200">
+                   <h4 className="font-bold text-md mb-3 text-stone-700 border-b border-stone-300 pb-1">📖 卦义详解</h4>
+                   <p className="text-stone-800 leading-relaxed whitespace-pre-line">
+                     {result.analysis.hexagramAnalysis.meaning}
+                   </p>
+                   <div className="mt-4 pt-4 border-t border-stone-200">
+                      <h5 className="font-bold text-stone-600 text-sm mb-2">💡 变爻提示</h5>
+                      <p className="text-stone-800 leading-relaxed whitespace-pre-line">
+                        {result.analysis.comprehensive}
+                      </p>
+                   </div>
+                </div>
+
               </div>
-              
-              <div>
-                <h4 className="font-bold text-lg border-l-4 border-chinese-red pl-2 mb-2">指引建议</h4>
-                <p className="text-stone-800 leading-relaxed">{result.suggestion}</p>
-              </div>
-            </div>
+            )}
 
             {mantra && (
-              <div className="bg-stone-800 text-paper-yellow p-6 rounded mt-6">
-                <h4 className="font-bold text-gold-accent mb-3 flex items-center gap-2">
-                  <span>✨</span> 
-                  {result.type === 'bad' ? '静心化解' : '祈福心咒'}
-                </h4>
-                <p className="text-lg text-center font-serif tracking-widest leading-loose">
-                  {mantra}
-                </p>
-                <p className="text-xs text-stone-400 text-center mt-4">
-                  * 请在心中默念此咒 *
-                </p>
+              <div className="bg-stone-200 text-stone-800 p-4 rounded text-center border border-stone-300">
+                 <p className="text-xs text-stone-500 mb-2">心有不安时，可默念此咒</p>
+                 <p className="font-bold font-serif tracking-widest">{mantra}</p>
               </div>
             )}
           </div>
         )}
 
-        {/* Huangli Info */}
-        <div className={clsx("bg-stone-100/50 p-6 rounded border border-stone-200", isQuickCheck ? "mt-0" : "mt-8")}>
-          <h4 className="font-bold text-xl text-center mb-4 font-serif text-chinese-red">
-            黄历信息
+        <div className={clsx("bg-stone-50 p-6 rounded border border-stone-200 text-sm", isQuickCheck ? "mt-0" : "mt-8")}>
+          <h4 className="font-bold text-base text-center mb-4 font-serif text-stone-500 uppercase tracking-widest">
+            黄历参考
           </h4>
           
           <div className="grid grid-cols-2 gap-4 text-center font-serif">
-            <div className="p-2">
-              <span className="block text-stone-500 text-sm">值神 (建除十二神)</span>
-              <span className={clsx("text-2xl font-bold", isDangerousDay ? "text-chinese-red" : "text-stone-800")}>
+            <div className="p-2 border-r border-stone-200">
+              <span className="block text-stone-400 text-xs mb-1">值神</span>
+              <span className={clsx("text-xl font-bold", isDangerousDay ? "text-chinese-red" : "text-stone-800")}>
                 {lunarInfo.zhiXing}
               </span>
               {isDangerousDay && (
-                <span className="block text-xs text-red-600 mt-1 font-bold animate-pulse">
-                  (今日值日凶险，诸事小心)
+                <span className="block text-xs text-red-600 mt-1 font-bold">
+                  (诸事小心)
                 </span>
               )}
             </div>
             
             <div className="p-2">
-              <span className="block text-stone-500 text-sm">冲煞</span>
-              <span className="text-lg font-bold text-stone-800">{lunarInfo.chong}</span>
-              <span className="block text-xs text-stone-600">{lunarInfo.sha}</span>
+              <span className="block text-stone-400 text-xs mb-1">冲煞</span>
+              <span className="text-md font-bold text-stone-800">{lunarInfo.chong}</span>
+              <span className="block text-xs text-stone-500 mt-1">{lunarInfo.sha}</span>
             </div>
 
-            <div className="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t border-stone-200 pt-4">
-               <div className="text-green-800">
-                 <span className="text-xs font-bold border border-green-800 px-1 rounded mr-2">宜</span>
-                 <span className="text-sm">{lunarInfo.yi.slice(0, 4).join(' ')}...</span>
+            <div className="col-span-2 grid grid-cols-2 gap-2 mt-2 border-t border-stone-100 pt-2">
+               <div className="text-left pl-4">
+                 <span className="text-xs font-bold text-green-700 bg-green-100 px-1 rounded mr-1">宜</span>
+                 <span className="text-stone-600 text-xs">{lunarInfo.yi.slice(0, 3).join(' ')}</span>
                </div>
-               <div className="text-red-800">
-                 <span className="text-xs font-bold border border-red-800 px-1 rounded mr-2">忌</span>
-                 <span className="text-sm">{lunarInfo.ji.slice(0, 4).join(' ')}...</span>
+               <div className="text-left pl-4">
+                 <span className="text-xs font-bold text-red-700 bg-red-100 px-1 rounded mr-1">忌</span>
+                 <span className="text-stone-600 text-xs">{lunarInfo.ji.slice(0, 3).join(' ')}</span>
                </div>
             </div>
           </div>
         </div>
 
-        <div className="text-center mt-8 text-stone-400 text-xs font-serif">
+        <div className="text-center mt-8 text-stone-300 text-[10px] font-serif">
           初筮告 再三渎 渎则不告 | 命运掌控在自己手中
         </div>
       </div>

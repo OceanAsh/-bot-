@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Calendar, Search, Clock, Sparkles } from 'lucide-react';
 
 interface DivinationFormProps {
@@ -7,17 +7,14 @@ interface DivinationFormProps {
 }
 
 export function DivinationForm({ onSubmit, onQuickCheck }: DivinationFormProps) {
-  const [dateStr, setDateStr] = useState('');
+  const [dateStr, setDateStr] = useState(() => {
+    const now = new Date();
+    return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  });
   const [objectName, setObjectName] = useState('');
   const [question, setQuestion] = useState('');
   const [type, setType] = useState<'general' | 'health' | 'mental' | 'career' | 'love'>('general');
 
-  useEffect(() => {
-    const now = new Date();
-    // Format: YYYY-MM-DDTHH:mm
-    const localIso = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-    setDateStr(localIso);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
