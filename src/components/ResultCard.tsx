@@ -42,11 +42,29 @@ export function ResultCard({ data }: ResultCardProps) {
           <div className="mb-8 space-y-8">
             
             {/* Hexagrams Display Grid */}
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="relative grid md:grid-cols-2 gap-8">
               
+              {/* Connector Arrow */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:flex flex-col items-center justify-center pointer-events-none">
+                <div className="bg-paper-yellow border border-stone-300 px-3 py-1 rounded-full shadow-md mb-2">
+                    <span className="text-xs font-bold text-stone-500 whitespace-nowrap">演变趋势</span>
+                </div>
+                <div className="bg-white rounded-full p-2 border border-stone-300 text-chinese-red shadow-md">
+                  <ArrowRight className="w-6 h-6" />
+                </div>
+              </div>
+
+              {/* Mobile Down Arrow */}
+              <div className="md:hidden flex flex-col items-center justify-center py-2">
+                 <span className="text-xs font-bold text-stone-400 mb-1">演变趋势</span>
+                 <div className="bg-white rounded-full p-1 border border-stone-300 text-chinese-red shadow-sm">
+                    <ArrowRight className="w-4 h-4 rotate-90" />
+                 </div>
+              </div>
+
               {/* Main Hexagram */}
               <div className="text-center bg-white/30 p-6 rounded border border-stone-200 relative">
-                 <span className="absolute top-2 left-2 text-xs font-bold text-white bg-chinese-red px-2 py-1 rounded">本卦</span>
+                 <span className="absolute top-2 left-2 text-xs font-bold text-white bg-chinese-red px-2 py-1 rounded">当前 · 本卦</span>
                  <div className="text-7xl mb-4 text-chinese-red font-serif leading-none mt-4">{result.hexagram.symbol}</div>
                  <h3 className="text-3xl font-bold text-chinese-red mb-1">{result.hexagram.name}</h3>
                  <p className="text-sm text-stone-500 mb-3">{result.hexagram.nature}</p>
@@ -58,12 +76,7 @@ export function ResultCard({ data }: ResultCardProps) {
 
               {/* Changed Hexagram */}
               <div className="text-center bg-stone-100/50 p-6 rounded border border-stone-200 relative">
-                 <div className="absolute top-1/2 -left-4 hidden md:block z-10">
-                    <div className="bg-white rounded-full p-1 border border-stone-300 text-stone-400 shadow-sm">
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
-                 </div>
-                 <span className="absolute top-2 left-2 text-xs font-bold text-stone-600 bg-stone-200 px-2 py-1 rounded">变卦</span>
+                 <span className="absolute top-2 left-2 text-xs font-bold text-stone-600 bg-stone-200 px-2 py-1 rounded">未来 · 变卦</span>
                  <div className="text-7xl mb-4 text-stone-700 font-serif leading-none mt-4 opacity-80">{result.changedHexagram.symbol}</div>
                  <h3 className="text-3xl font-bold text-stone-700 mb-1">{result.changedHexagram.name}</h3>
                  <p className="text-sm text-stone-500 mb-3">{result.changedHexagram.nature}</p>
@@ -73,6 +86,15 @@ export function ResultCard({ data }: ResultCardProps) {
                  </div>
               </div>
 
+            </div>
+
+            {/* Evolution Analysis */}
+            <div className="bg-stone-50 p-4 rounded border border-stone-200 text-center">
+               <h4 className="text-stone-500 text-xs font-bold uppercase tracking-widest mb-2">演变分析</h4>
+               <p className="text-stone-800 font-serif text-base">
+                 从 <span className="font-bold text-chinese-red">{result.hexagram.name}</span> 演变为 <span className="font-bold text-stone-700">{result.changedHexagram.name}</span>，
+                 这意味着{result.analysis.comprehensive.split('4. 动爻在')[1]?.split('，')[1]?.replace('卦象演变为', '') || '事物将发生转折'}。
+               </p>
             </div>
 
             {/* Detailed Analysis */}
