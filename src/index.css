@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Noto Serif SC", "SimSun", serif;
+  
+  --color-chinese-red: #C21F30;
+  --color-ink-black: #1A1A1A;
+  --color-paper-yellow: #F4E4C1;
+  --color-gold-accent: #D4AF37;
+}
+
+body {
+  background-color: var(--color-paper-yellow);
+  color: var(--color-ink-black);
+  font-family: var(--font-serif);
+}
+
+.ink-brush-border {
+  box-shadow: 0 0 0 2px var(--color-ink-black), 4px 4px 0 var(--color-chinese-red);
+}
