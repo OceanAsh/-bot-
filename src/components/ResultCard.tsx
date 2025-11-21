@@ -160,14 +160,14 @@ export function ResultCard({ data }: ResultCardProps) {
               <span className="block text-xs text-stone-500 mt-1">{lunarInfo.sha}</span>
             </div>
 
-            <div className="col-span-2 grid grid-cols-2 gap-2 mt-2 border-t border-stone-100 pt-2">
-               <div className="text-left pl-4">
-                 <span className="text-xs font-bold text-green-700 bg-green-100 px-1 rounded mr-1">宜</span>
-                 <span className="text-stone-600 text-xs">{lunarInfo.yi.slice(0, 3).join(' ')}</span>
+            <div className="col-span-2 grid grid-cols-1 gap-3 mt-2 border-t border-stone-100 pt-3">
+               <div className="text-left px-2">
+                 <span className="inline-block text-xs font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded mr-2 mb-1">宜</span>
+                 <span className="text-stone-600 text-sm leading-relaxed">{lunarInfo.yi.join(' ')}</span>
                </div>
-               <div className="text-left pl-4">
-                 <span className="text-xs font-bold text-red-700 bg-red-100 px-1 rounded mr-1">忌</span>
-                 <span className="text-stone-600 text-xs">{lunarInfo.ji.slice(0, 3).join(' ')}</span>
+               <div className="text-left px-2">
+                 <span className="inline-block text-xs font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded mr-2 mb-1">忌</span>
+                 <span className="text-stone-600 text-sm leading-relaxed">{lunarInfo.ji.join(' ')}</span>
                </div>
             </div>
           </div>
