@@ -53,19 +53,6 @@ export function ResultCard({ data }: ResultCardProps) {
                  <div className="border-t border-stone-300/50 pt-3 mt-2">
                    <p className="text-lg font-bold text-stone-800 mb-2">“ {result.hexagram.judgment} ”</p>
                    <p className="text-stone-600 italic font-serif text-sm leading-relaxed">{result.hexagram.description}</p>
-                   
-                   {result.analysis?.hexagramAnalysis.shaoYong && (
-                     <div className="mt-4 text-left bg-stone-50/50 p-2 rounded border border-stone-100">
-                       <p className="text-xs font-bold text-stone-500 mb-1">邵雍解：</p>
-                       <p className="text-stone-700 text-sm">{result.analysis.hexagramAnalysis.shaoYong}</p>
-                     </div>
-                   )}
-                   {result.analysis?.hexagramAnalysis.traditional && (
-                     <div className="mt-2 text-left bg-stone-50/50 p-2 rounded border border-stone-100">
-                       <p className="text-xs font-bold text-stone-500 mb-1">传统解卦：</p>
-                       <p className="text-stone-700 text-sm">{result.analysis.hexagramAnalysis.traditional}</p>
-                     </div>
-                   )}
                  </div>
               </div>
 
@@ -83,19 +70,6 @@ export function ResultCard({ data }: ResultCardProps) {
                  <div className="border-t border-stone-300/50 pt-3 mt-2">
                    <p className="text-lg font-bold text-stone-700 mb-2">“ {result.changedHexagram.judgment} ”</p>
                    <p className="text-stone-600 italic font-serif text-sm leading-relaxed">{result.changedHexagram.description}</p>
-
-                   {result.analysis?.changedHexagram.shaoYong && (
-                     <div className="mt-4 text-left bg-stone-50/50 p-2 rounded border border-stone-200">
-                       <p className="text-xs font-bold text-stone-500 mb-1">邵雍解：</p>
-                       <p className="text-stone-700 text-sm">{result.analysis.changedHexagram.shaoYong}</p>
-                     </div>
-                   )}
-                   {result.analysis?.changedHexagram.traditional && (
-                     <div className="mt-2 text-left bg-stone-50/50 p-2 rounded border border-stone-200">
-                       <p className="text-xs font-bold text-stone-500 mb-1">传统解卦：</p>
-                       <p className="text-stone-700 text-sm">{result.analysis.changedHexagram.traditional}</p>
-                     </div>
-                   )}
                  </div>
               </div>
 
@@ -120,9 +94,28 @@ export function ResultCard({ data }: ResultCardProps) {
                 {/* Section 2: Detailed Meaning */}
                 <div className="bg-stone-100/80 p-5 rounded border border-stone-200">
                    <h4 className="font-bold text-md mb-3 text-stone-700 border-b border-stone-300 pb-1">📖 卦义详解</h4>
-                   <p className="text-stone-800 leading-relaxed whitespace-pre-line">
+                   <p className="text-stone-800 leading-relaxed whitespace-pre-line mb-4">
                      {result.analysis.hexagramAnalysis.meaning}
                    </p>
+                   
+                   {result.analysis.hexagramAnalysis.shaoYong && (
+                     <div className="mb-4 bg-white p-3 rounded border border-stone-200">
+                       <h5 className="font-bold text-stone-600 text-sm mb-2">【北宋易学家邵雍解】</h5>
+                       <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
+                         {result.analysis.hexagramAnalysis.shaoYong}
+                       </p>
+                     </div>
+                   )}
+
+                   {result.analysis.hexagramAnalysis.traditional && (
+                     <div className="mb-4 bg-white p-3 rounded border border-stone-200">
+                       <h5 className="font-bold text-stone-600 text-sm mb-2">【传统解卦】</h5>
+                       <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
+                         {result.analysis.hexagramAnalysis.traditional}
+                       </p>
+                     </div>
+                   )}
+
                    <div className="mt-4 pt-4 border-t border-stone-200">
                       <h5 className="font-bold text-stone-600 text-sm mb-2">💡 变爻提示</h5>
                       <p className="text-stone-800 leading-relaxed whitespace-pre-line">
