@@ -92,8 +92,13 @@ export function ResultCard({ data }: ResultCardProps) {
             <div className="bg-stone-50 p-4 rounded border border-stone-200 text-center">
                <h4 className="text-stone-500 text-xs font-bold uppercase tracking-widest mb-2">演变分析</h4>
                <p className="text-stone-800 font-serif text-base">
-                 从 <span className="font-bold text-chinese-red">{result.hexagram.name}</span> 演变为 <span className="font-bold text-stone-700">{result.changedHexagram.name}</span>，
-                 这意味着{result.analysis.comprehensive.split('4. 动爻在')[1]?.split('，')[1]?.replace('卦象演变为', '') || '事物将发生转折'}。
+                 从 <span className="font-bold text-chinese-red">{result.hexagram.name}</span> 演变为 <span className="font-bold text-stone-700">{result.changedHexagram.name}</span>。
+               </p>
+               <p className="text-stone-600 font-serif text-sm mt-2">
+                 {result.analysis.comprehensive.includes('动爻在第1爻') || result.analysis.comprehensive.includes('动爻在第2爻') || result.analysis.comprehensive.includes('动爻在第3爻')
+                   ? "变化源于事物的基础或内部阶段。这意味着局势的根本或初期因素发生了改变，从而推动了整个事态的发展。"
+                   : "变化源于事物的上层或外部环境。这意味着外部条件或最终阶段的因素发生了改变，从而引发了新的走向。"
+                 }
                </p>
             </div>
 
@@ -120,23 +125,51 @@ export function ResultCard({ data }: ResultCardProps) {
                      {result.analysis.hexagramAnalysis.meaning}
                    </p>
                    
-                   {result.analysis.hexagramAnalysis.shaoYong && (
-                     <div className="mb-4 bg-white p-3 rounded border border-stone-200">
-                       <h5 className="font-bold text-stone-600 text-sm mb-2">【北宋易学家邵雍解】</h5>
-                       <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
-                         {result.analysis.hexagramAnalysis.shaoYong}
-                       </p>
-                     </div>
-                   )}
+                   {/* Main Hexagram Details */}
+                   <div className="mb-8">
+                     <h5 className="font-bold text-chinese-red text-sm mb-3 border-b border-chinese-red/20 pb-1 inline-block">当前：{result.analysis.hexagramAnalysis.name}</h5>
+                     
+                     {result.analysis.hexagramAnalysis.shaoYong && (
+                       <div className="mb-4 bg-white p-3 rounded border border-stone-200">
+                         <h6 className="font-bold text-stone-500 text-xs mb-1">【邵雍解】</h6>
+                         <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
+                           {result.analysis.hexagramAnalysis.shaoYong}
+                         </p>
+                       </div>
+                     )}
 
-                   {result.analysis.hexagramAnalysis.traditional && (
-                     <div className="mb-4 bg-white p-3 rounded border border-stone-200">
-                       <h5 className="font-bold text-stone-600 text-sm mb-2">【传统解卦】</h5>
-                       <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
-                         {result.analysis.hexagramAnalysis.traditional}
-                       </p>
-                     </div>
-                   )}
+                     {result.analysis.hexagramAnalysis.traditional && (
+                       <div className="mb-4 bg-white p-3 rounded border border-stone-200">
+                         <h6 className="font-bold text-stone-500 text-xs mb-1">【传统解】</h6>
+                         <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
+                           {result.analysis.hexagramAnalysis.traditional}
+                         </p>
+                       </div>
+                     )}
+                   </div>
+
+                   {/* Changed Hexagram Details */}
+                   <div className="mb-4">
+                     <h5 className="font-bold text-stone-600 text-sm mb-3 border-b border-stone-300 pb-1 inline-block">未来：{result.changedHexagram.name}</h5>
+                     
+                     {result.analysis.changedHexagram.shaoYong && (
+                       <div className="mb-4 bg-white p-3 rounded border border-stone-200">
+                         <h6 className="font-bold text-stone-500 text-xs mb-1">【邵雍解】</h6>
+                         <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
+                           {result.analysis.changedHexagram.shaoYong}
+                         </p>
+                       </div>
+                     )}
+
+                     {result.analysis.changedHexagram.traditional && (
+                       <div className="mb-4 bg-white p-3 rounded border border-stone-200">
+                         <h6 className="font-bold text-stone-500 text-xs mb-1">【传统解】</h6>
+                         <p className="text-stone-800 text-sm leading-relaxed whitespace-pre-line">
+                           {result.analysis.changedHexagram.traditional}
+                         </p>
+                       </div>
+                     )}
+                   </div>
 
                    <div className="mt-4 pt-4 border-t border-stone-200">
                       <h5 className="font-bold text-stone-600 text-sm mb-2">💡 变爻提示</h5>
